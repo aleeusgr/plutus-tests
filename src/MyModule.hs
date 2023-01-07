@@ -1,3 +1,5 @@
+{-# LANGUAGE ImportQualifiedPost #-}
+
 module MyModule where
 
 import Cardano.Node.Emulator.Params (pNetworkId)
