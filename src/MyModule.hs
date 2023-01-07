@@ -1,4 +1,5 @@
 {-# LANGUAGE ImportQualifiedPost #-}
+{-# LANGUAGE ExplicitNamespaces #-}
 
 module MyModule where
 
