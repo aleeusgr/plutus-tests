@@ -3,6 +3,8 @@ Jan 9
 Where does this code go? 
 I can put it in `/src`, or I can put it into `./examples/src/`
 
+NOTE: plutus starter needs updating to V2, does not it? 
+
 
 ## Reading README:
 PAB: serve and interact with contracts over a web API;
