@@ -1,4 +1,8 @@
 Jan 9
+## Reading [Tutorial](https://plutus-apps.readthedocs.io/en/latest/plutus/tutorials/basic-apps.html)
+Where does this code go? 
+I can put it in `/src`, or I can put it into `./examples/src/`
+
 
 ## Reading README:
 PAB: serve and interact with contracts over a web API;
