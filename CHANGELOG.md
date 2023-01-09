@@ -5,6 +5,13 @@ I can put it in `/src`, or I can put it into `./examples/src/`
 
 NOTE: plutus starter needs updating to V2, does not it? 
 
+I have three pieces of code, which do three different things; 
+-[ ] PAB;
+-[ ] the example in the examples folder.
+-[ ] Third is the tutorial, basic-apps;
+
+How do the first two connect and where does the third fit?
+
 
 ## Reading README:
 PAB: serve and interact with contracts over a web API;
