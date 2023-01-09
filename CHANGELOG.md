@@ -12,6 +12,10 @@ I have three pieces of code, which do three different things;
 
 How do the first two connect and where does the third fit?
 
+PAB:
+>environment to help developers create and test DApps
+basic-apps:
+>In this tutorial you are going to write a Plutus app
 
 ## Reading README:
 PAB: serve and interact with contracts over a web API;
