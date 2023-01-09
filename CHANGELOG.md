@@ -1,5 +1,6 @@
 Jan 9
 
+## Reading README:
 PAB: serve and interact with contracts over a web API;
 
 `curl -s http://localhost:9080/api/contract/definitions | jq`
@@ -13,8 +14,11 @@ This aligns with the process of developing secure dApps;
 
 A task idea:
 - copy SIDAN code to plutus-starter
-- adjust .cabal
 - make it build
+- .cabal
+
+Validator script is the lock; plutus-apps is the only kind of key that can open such a lock;
+PAB is the endpoint; it accepts web requests, processess them and sends them to blockchain: PAB -> cli -> cardano-node.
 
 Jan 7
 
