@@ -41,8 +41,8 @@ common lang
 library
     import: lang
     exposed-modules:
-      MyModule
-      Plutus.Contracts.Game
+      MyFirstPlutusCompiler
+      MyFirstPlutusScript
     build-depends:
       base >= 4.9 && < 5,
       aeson -any,
@@ -59,7 +59,7 @@ library
       plutus-script-utils -any,
       text -any,
       lens -any,
-    hs-source-dirs: src examples/src
+    hs-source-dirs: src 
 
 test-suite plutus-example-projects-test
   import: lang
@@ -83,21 +83,3 @@ test-suite plutus-example-projects-test
     tasty-hedgehog >=0.2.0.0
 
 
-executable plutus-starter-pab
-  import: lang
-  main-is: Main.hs
-  hs-source-dirs: pab
-  ghc-options:
-    -threaded
-  build-depends:
-    base >= 4.9 && < 5,
-    data-default -any,
-    plutus-contract -any,
-    plutus-pab -any,
-    plutus-starter -any,
-    aeson -any,
-    freer-simple -any,
-    prettyprinter -any,
-    freer-extras -any,
-    plutus-ledger -any,
-    openapi3 -any,
