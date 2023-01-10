@@ -59,6 +59,8 @@ library
       plutus-script-utils -any,
       text -any,
       lens -any,
+      cardano-api,
+      serialize
     hs-source-dirs: src 
 
 test-suite plutus-example-projects-test
