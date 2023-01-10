@@ -60,7 +60,7 @@ library
       text -any,
       lens -any,
       cardano-api,
-      serialize
+      serialise
     hs-source-dirs: src 
 
 test-suite plutus-example-projects-test
