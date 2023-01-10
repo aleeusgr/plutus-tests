@@ -1,3 +1,15 @@
+Jan 10
+
+There is https://github.com/input-output-hk/plutus-starter/issues/56
+How can I add V2 support?
+
+I need a test, a working example of plutus-app using v2 scripts. 
+I think there exists V2 version of 
+https://gitlab.com/gimbalabs/plutus-pbl-summer-2022/plutus-always-succeeds
+
+Therefore I should add plutus-always-succeds and see if it works.
+its tag is specified to be `v2022-04-06`
+
 Jan 9
 
 ## Reading README:
