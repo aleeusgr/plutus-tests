@@ -1,6 +1,6 @@
 module MyModule where
 
-import qualified Plutus.Script.Utils.V1.Typed.Scripts as PSU.V2
+import qualified Plutus.Script.Utils.V2.Typed.Scripts as PSU.V2
 --
 --    Could not find module ‘Plutus.Script.Utils.V2.Typed.Scripts’
 --    Perhaps you meant
