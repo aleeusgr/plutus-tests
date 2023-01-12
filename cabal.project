@@ -20,6 +20,7 @@ source-repository-package
     playground-common
     plutus-chain-index
     plutus-chain-index-core
+    plutus-hysterical-screams
     plutus-contract
     plutus-example
     plutus-contract-certification
