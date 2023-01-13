@@ -15,6 +15,7 @@
 {-# LANGUAGE TypeOperators              #-}
 {-# OPTIONS_GHC -fno-ignore-interface-pragmas #-}
 
+{-# LANGUAGE ImportQualifiedPost               #-}
 module Game where
 
 -- TRIM TO HERE
