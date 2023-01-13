@@ -58,17 +58,17 @@ main = void $ Simulator.runSimulationWith handlers $ do
 
     shutdown
 
--- | An example of computing the script size for a particular trace.
--- Read more: <https://plutus.readthedocs.io/en/latest/plutus/howtos/analysing-scripts.html>
-writeCostingScripts :: IO ()
-writeCostingScripts = do
-  let config = ScriptsConfig { scPath = "/tmp/plutus-costing-outputs/", scCommand = cmd }
-      cmd    = Scripts { unappliedValidators = FullyAppliedValidators }
-      -- Note: Here you can use any trace you wish.
-      trace  = correctGuessTrace
-  (totalSize, exBudget) <- writeScriptsTo config "game" trace def
-  putStrLn $ "Total size = " <> show totalSize
-  putStrLn $ "ExBudget = " <> show exBudget
+---- | An example of computing the script size for a particular trace.
+---- Read more: <https://plutus.readthedocs.io/en/latest/plutus/howtos/analysing-scripts.html>
+--writeCostingScripts :: IO ()
+--writeCostingScripts = do
+--  let config = ScriptsConfig { scPath = "/tmp/plutus-costing-outputs/", scCommand = cmd }
+--      cmd    = Scripts { unappliedValidators = FullyAppliedValidators }
+--      -- Note: Here you can use any trace you wish.
+--      trace  = correctGuessTrace
+--  (totalSize, exBudget) <- writeScriptsTo config "game" trace def
+--  putStrLn $ "Total size = " <> show totalSize
+--  putStrLn $ "ExBudget = " <> show exBudget
 
 
 data StarterContracts =
