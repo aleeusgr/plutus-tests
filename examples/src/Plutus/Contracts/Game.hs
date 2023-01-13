@@ -16,7 +16,8 @@
 {-# OPTIONS_GHC -fno-ignore-interface-pragmas #-}
 
 {-# LANGUAGE ImportQualifiedPost               #-}
-module Game where
+
+module Plutus.Contracts.Game where
 
 -- TRIM TO HERE
 -- A game with two players. Player 1 thinks of a secret word
