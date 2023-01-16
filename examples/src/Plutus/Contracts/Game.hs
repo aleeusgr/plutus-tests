@@ -17,7 +17,25 @@
 
 {-# LANGUAGE ImportQualifiedPost               #-}
 
-module Plutus.Contracts.Game where
+module Plutus.Contracts.Game 
+    ( lock
+    , guess
+    , game
+    , GameSchema
+    , GuessParams(..)
+    , LockParams(..)
+    -- * Scripts
+    , gameValidator
+    , hashString
+    , clearString
+    -- * Address
+    , gameAddress
+    , validateGuess
+    -- * Traces
+    , guessTrace
+    , lockTrace
+    , correctGuessTrace
+    ) where
 
 -- TRIM TO HERE
 -- A game with two players. Player 1 thinks of a secret word
@@ -179,6 +197,34 @@ Playground then uses this schema to present an HTML form to the user where the
 parameters can be entered.
 
 -}
+lockTrace :: Wallet -> Haskell.String -> EmulatorTrace ()
+lockTrace wallet secretWord = do
+    hdl <- Trace.activateContractWallet wallet (lock @ContractError)
+    void $ Trace.waitNSlots 1
+    Trace.callEndpoint @"lock" hdl (LockParams secretWord (Ada.adaValueOf 10))
+    void $ Trace.waitNSlots 1
+
+guessTrace :: Wallet -> Haskell.String -> EmulatorTrace ()
+guessTrace wallet guessWord = do
+    hdl <- Trace.activateContractWallet wallet (guess @ContractError)
+    void $ Trace.waitNSlots 1
+    Trace.callEndpoint @"guess" hdl (GuessParams guessWord)
+    void $ Trace.waitNSlots 1
+
+correctGuessTrace :: EmulatorTrace ()
+correctGuessTrace = do
+  let w1 = X.knownWallet 1
+      w2 = X.knownWallet 2
+      secret = "secret"
+
+  h1 <- Trace.activateContractWallet w1 (lock @ContractError)
+  void $ Trace.waitNSlots 1
+  Trace.callEndpoint @"lock" h1 (LockParams secret (Ada.adaValueOf 10))
+
+  h2 <- Trace.activateContractWallet w2 (guess @ContractError)
+  void $ Trace.waitNSlots 1
+  Trace.callEndpoint @"guess" h2 (GuessParams secret)
+  void $ Trace.waitNSlots 1
 
 endpoints :: AsContractError e => Contract () GameSchema e ()
 endpoints = game
