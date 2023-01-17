@@ -62,6 +62,9 @@ import PlutusTx.Prelude hiding (pure, (<$>))
 import Prelude qualified as Haskell
 
 ------------------------------------------------------------
+import           Plutus.Trace.Emulator (EmulatorTrace)
+import qualified Plutus.Trace.Emulator as Trace
+------------------------------------------------------------
 
 newtype HashedString = HashedString BuiltinByteString deriving newtype (PlutusTx.ToData, PlutusTx.FromData, PlutusTx.UnsafeFromData)
 
