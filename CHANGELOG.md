@@ -7,6 +7,11 @@ Now to implement what it actually means.
 Green ~ The following statement is true:
 The contract in this repo is Level 1 certification ready. 
 What does it mean? 
+I need to find a name for the next step. 
+How do I name my pull request?
+For this I formulate a testing oracle. 
+LOOK AT THE CODE!
+
 
 Jan 9
 
