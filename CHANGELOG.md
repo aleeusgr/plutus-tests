@@ -1,3 +1,13 @@
+Jan 20
+
+The last several weeks were rather intense and the pain in the back is crazy, I even lost my sleep somehow.
+What needs to be done?
+This repo covers a good chunk of work to do: we have the green light.
+Now to implement what it actually means.
+Green ~ The following statement is true:
+The contract in this repo is Level 1 certification ready. 
+What does it mean? 
+
 Jan 9
 
 ## Reading README:
