@@ -2,6 +2,7 @@ Jan 21
 
 I should move on to next feature, tutorial is worth fixing later
 The logic I will be using is the escrow, I need to find docs on the escrow contract.
+But I have a fork, I can go with Escrow, or I can go with guide on GameStateMachine. I am tempted to jump a step but will it do good? Avoid success at all costs.
 
 Jan 20
 
