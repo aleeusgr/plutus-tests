@@ -1,3 +1,7 @@
+Jan 21
+
+I should move on to next feature, tutorial is worth fixing later
+
 Jan 20
 
 The last several weeks were rather intense and the pain in the back is crazy, I even lost my sleep somehow.
