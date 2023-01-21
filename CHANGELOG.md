@@ -1,6 +1,7 @@
 Jan 21
 
 I should move on to next feature, tutorial is worth fixing later
+The logic I will be using is the escrow, I need to find docs on the escrow contract.
 
 Jan 20
 
