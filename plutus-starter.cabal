@@ -43,6 +43,7 @@ library
     exposed-modules:
       MyModule
       Plutus.Contracts.Game
+      Plutus.Contracts.GameStateMachine
     build-depends:
       base >= 4.9 && < 5,
       aeson -any,
@@ -59,7 +60,9 @@ library
       plutus-script-utils -any,
       text -any,
       lens -any,
-    hs-source-dirs: src examples/src
+    :x
+
+q
 
 test-suite plutus-example-projects-test
   import: lang
@@ -68,6 +71,7 @@ test-suite plutus-example-projects-test
   hs-source-dirs: examples/test
   other-modules:
     Spec.Game
+    Spec.GameStateMachine
   build-depends:
     plutus-tx -any,
     plutus-tx-plugin,
