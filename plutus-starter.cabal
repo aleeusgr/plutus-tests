@@ -60,9 +60,6 @@ library
       plutus-script-utils -any,
       text -any,
       lens -any,
-    :x
-
-q
 
 test-suite plutus-example-projects-test
   import: lang
