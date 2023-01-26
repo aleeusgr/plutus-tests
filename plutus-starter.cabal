@@ -84,6 +84,15 @@ test-suite plutus-example-projects-test
     tasty-hunit -any,
     text -any,
     tasty-hedgehog >=0.2.0.0
+    , lens -any
+    , freer-extras -any
+    , containers -any
+    , prettyprinter -any
+    , QuickCheck -any
+    , tasty-quickcheck
+    , data-default -any
+
+
 
 
 executable plutus-starter-pab
