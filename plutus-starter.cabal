@@ -43,6 +43,7 @@ library
     exposed-modules:
       MyModule
       Plutus.Contracts.Game
+      Plutus.Contracts.GameStateMachine
     build-depends:
       base >= 4.9 && < 5,
       aeson -any,
@@ -61,6 +62,7 @@ library
       lens -any,
     hs-source-dirs: src examples/src
 
+
 test-suite plutus-example-projects-test
   import: lang
   type: exitcode-stdio-1.0
@@ -68,6 +70,7 @@ test-suite plutus-example-projects-test
   hs-source-dirs: examples/test
   other-modules:
     Spec.Game
+    Spec.GameStateMachine
   build-depends:
     plutus-tx -any,
     plutus-tx-plugin,
@@ -81,6 +84,16 @@ test-suite plutus-example-projects-test
     tasty-hunit -any,
     text -any,
     tasty-hedgehog >=0.2.0.0
+    , lens -any
+    , freer-extras -any
+    , containers -any
+    , prettyprinter -any
+    , QuickCheck -any
+    , tasty-quickcheck
+    , data-default -any
+    , plutus-contract-certification
+
+
 
 
 executable plutus-starter-pab
