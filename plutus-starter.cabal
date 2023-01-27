@@ -91,6 +91,7 @@ test-suite plutus-example-projects-test
     , QuickCheck -any
     , tasty-quickcheck
     , data-default -any
+    , plutus-contract-certification
 
 
 
