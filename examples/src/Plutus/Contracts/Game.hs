@@ -1,25 +1,23 @@
-{-# LANGUAGE AllowAmbiguousTypes        #-}
 {-# LANGUAGE DataKinds                  #-}
 {-# LANGUAGE DeriveAnyClass             #-}
 {-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE DerivingStrategies         #-}
 {-# LANGUAGE FlexibleContexts           #-}
-{-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE MultiParamTypeClasses      #-}
-{-# LANGUAGE NoImplicitPrelude          #-}
-{-# LANGUAGE PartialTypeSignatures      #-}
-{-# LANGUAGE RecordWildCards            #-}
+{-# LANGUAGE NamedFieldPuns             #-}
+{-# LANGUAGE OverloadedStrings          #-}
 {-# LANGUAGE ScopedTypeVariables        #-}
 {-# LANGUAGE TemplateHaskell            #-}
+{-# LANGUAGE TupleSections              #-}
 {-# LANGUAGE TypeApplications           #-}
 {-# LANGUAGE TypeFamilies               #-}
 {-# LANGUAGE TypeOperators              #-}
-{-# LANGUAGE ViewPatterns               #-}
+{-# OPTIONS_GHC -fno-ignore-interface-pragmas #-}
 
+{-# LANGUAGE ImportQualifiedPost               #-}
 
--- | A guessing game
-module Plutus.Contracts.Game
+module Plutus.Contracts.Game 
     ( lock
     , guess
     , game
@@ -39,25 +37,34 @@ module Plutus.Contracts.Game
     , correctGuessTrace
     ) where
 
-import           Control.Monad         (void)
-import qualified Data.ByteString.Char8 as C
-import           Data.Map              (Map)
-import qualified Data.Map              as Map
-import           Data.Maybe            (catMaybes)
-import           Plutus.V1.Ledger.Api  (Address, ScriptContext, Validator, Value, Datum(Datum))
-import qualified Ledger
-import qualified Ledger.Ada            as Ada
-import qualified Ledger.Constraints    as Constraints
-import           Ledger.Tx             (ChainIndexTxOut (..))
-import           Playground.Contract
-import           Plutus.Contract
-import           Plutus.Contract.Trace as X
-import qualified PlutusTx
-import           PlutusTx.Prelude      hiding (pure, (<$>))
-import qualified Prelude               as Haskell
+-- TRIM TO HERE
+-- A game with two players. Player 1 thinks of a secret word
+-- and uses its hash, and the game validator script, to lock
+-- some funds (the prize) in a pay-to-script transaction output.
+-- Player 2 guesses the word by attempting to spend the transaction
+-- output. If the guess is correct, the validator script releases the funds.
+-- If it isn't, the funds stay locked.
+import Control.Monad (void)
+import Data.ByteString.Char8 qualified as C
+import Data.Map (Map)
+import Data.Map qualified as Map
+import Data.Maybe (catMaybes)
+import Ledger.Ada qualified as Ada
+import Ledger.Constraints qualified as Constraints
+import Ledger.Tx (ChainIndexTxOut (..))
+import Ledger.Typed.Scripts qualified as Scripts
+import Playground.Contract
+import Plutus.Contract
+import Plutus.Script.Utils.V1.Address (mkValidatorAddress)
+import Plutus.V1.Ledger.Api (Address, Datum (Datum), ScriptContext, Validator, Value)
+import PlutusTx qualified
+import PlutusTx.Prelude hiding (pure, (<$>))
+import Prelude qualified as Haskell
+
+------------------------------------------------------------
 import           Plutus.Trace.Emulator (EmulatorTrace)
 import qualified Plutus.Trace.Emulator as Trace
-import qualified Plutus.Script.Utils.V1.Typed.Scripts as Scripts
+------------------------------------------------------------
 
 newtype HashedString = HashedString BuiltinByteString deriving newtype (PlutusTx.ToData, PlutusTx.FromData, PlutusTx.UnsafeFromData)
 
@@ -105,7 +112,7 @@ gameValidator = Scripts.validatorScript gameInstance
 
 -- | The address of the game (the hash of its validator script)
 gameAddress :: Address
-gameAddress = Ledger.scriptAddress gameValidator
+gameAddress = mkValidatorAddress gameValidator
 
 -- | Parameters for the "lock" endpoint
 data LockParams = LockParams
@@ -137,7 +144,7 @@ guess = endpoint @"guess" @GuessParams $ \(GuessParams theGuess) -> do
     utxos <- fundsAtAddressGeq gameAddress (Ada.lovelaceValueOf 1)
 
     let redeemer = clearString theGuess
-        tx       = collectFromScript utxos redeemer
+        tx       = Constraints.collectFromTheScript utxos redeemer
 
     -- Log a message saying if the secret word was correctly guessed
     let hashedSecretWord = findSecretWordValue utxos
@@ -160,14 +167,39 @@ findSecretWordValue =
 -- | Extract the secret word in the Datum of a given transaction output is possible
 secretWordValue :: ChainIndexTxOut -> Maybe HashedString
 secretWordValue o = do
-  Datum d <- either (const Nothing) Just (_ciTxOutDatum o)
+  Datum d <- snd (_ciTxOutScriptDatum o)
   PlutusTx.fromBuiltinData d
 
 game :: AsContractError e => Contract () GameSchema e ()
 game = do
     logInfo @Haskell.String "Waiting for guess or lock endpoint..."
-    selectList [lock, guess] >> game
+    selectList [lock, guess]
 
+{- Note [Contract endpoints]
+
+A contract endpoint is a function that uses the wallet API to interact with the
+blockchain. We can look at contract endpoints from two different points of view.
+
+1. Contract users
+
+Contract endpoints are the visible interface of the contract. They provide a
+UI (HTML form) for entering the parameters of the actions we may take as part
+of the contract.
+
+2. Contract authors
+
+As contract authors we define endpoints as functions that return a value of
+type 'MockWallet ()'. This type indicates that the function uses the wallet API
+to produce and spend transaction outputs on the blockchain.
+
+Endpoints can have any number of parameters: 'lock' has two
+parameters, 'guess' has one and 'startGame' has none. For each endpoint we
+include a call to 'mkFunction' at the end of the contract definition. This
+causes the Haskell compiler to generate a schema for the endpoint. The Plutus
+Playground then uses this schema to present an HTML form to the user where the
+parameters can be entered.
+
+-}
 lockTrace :: Wallet -> Haskell.String -> EmulatorTrace ()
 lockTrace wallet secretWord = do
     hdl <- Trace.activateContractWallet wallet (lock @ContractError)
@@ -196,3 +228,10 @@ correctGuessTrace = do
   void $ Trace.waitNSlots 1
   Trace.callEndpoint @"guess" h2 (GuessParams secret)
   void $ Trace.waitNSlots 1
+
+endpoints :: AsContractError e => Contract () GameSchema e ()
+endpoints = game
+
+mkSchemaDefinitions ''GameSchema
+
+$(mkKnownCurrencies [])

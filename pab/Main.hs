@@ -59,7 +59,7 @@ main = void $ Simulator.runSimulationWith handlers $ do
     shutdown
 
 -- | An example of computing the script size for a particular trace.
--- Read more: <https://plutus.readthedocs.io/en/latest/plutus/howtos/analysing-scripts.html>
+-- Read more: <https://plutus-apps.readthedocs.io/en/latest/plutus/howtos/analysing-scripts.html>
 writeCostingScripts :: IO ()
 writeCostingScripts = do
   let config = ScriptsConfig { scPath = "/tmp/plutus-costing-outputs/", scCommand = cmd }
