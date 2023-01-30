@@ -59,6 +59,8 @@ library
       plutus-script-utils -any,
       text -any,
       lens -any,
+      --
+      data-default
     hs-source-dirs: src examples/src
 
 test-suite plutus-example-projects-test
