@@ -1,3 +1,9 @@
+Feb 2
+
+I could build Guessing Game, but I left loose end: I need to add the new tests to the main tree. However it is redundant since guessing game tests already exist in ps.
+I began integrating V2 functions earlier and got stuck where the original Guessing Game was changed and I need to rewrite its trace. So here is an answer for my question: to understand trace I need to read through V2 in this repo.
+But there is also the larges feature I think I should add: tests for GPTE. I've no idea how to actually do this, but still its a destination.
+
 Jan 21
 
 I should move on to next feature, tutorial is worth fixing later
